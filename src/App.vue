@@ -30,10 +30,13 @@ export default {
   },
   methods: {
     onSubmit: function() {
-      const user = "gsuxlzt";
+      let { user } = this;
       axios
         .get(`${api}/users/${user}`)
-        .then(response => console.log(response.data))
+        .then(response => {
+          console.log(response.data);
+          this.hasError = false;
+        })
         .catch(error => {
           this.hasError = true;
           this.user = "";
