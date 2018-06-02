@@ -1,60 +1,86 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <div id="main">
+    <div class="main--item">
+		<h2 class="title">
+			Search for a Github user:
+		</h2>
+    </div>
+	<div class="main--item">
+		<form v-on:submit.prevent="onSubmit" class="flex-form">
+			<input v-model="user" class="flex-form--item" name="user_name"/>
+			<button class="flex-form--item" type="submit">Search</button>
+			<div class="flex-form--item error-container">
+				<span v-if="hasError" class="error-message">No user matched your search.</span>
+			</div>
+		</form>
+	</div>
+ </div>
 </template>
 
 <script>
+import axios from "axios";
+const api = "https://api.github.com";
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      user: "",
+      hasError: false
+    };
+  },
+  methods: {
+    onSubmit: function() {
+      const user = "gsuxlzt";
+      axios
+        .get(`${api}/users/${user}`)
+        .then(response => console.log(response.data))
+        .catch(error => {
+          this.hasError = true;
+          this.user = "";
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#main {
+  width: 35%;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  .main--item {
+    flex: 1 0 100%;
+    width: 100%;
+  }
 }
 
-h1, h2 {
-  font-weight: normal;
+.flex-form {
+  display: flex;
+  direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: space-between;
+  .flex-form--item {
+    margin: 0 5px;
+  }
+  .error-container {
+    align-self: flex-start;
+    flex-basis: 100%;
+    margin-top: 5px;
+    .error-message {
+      color: #ff0033;
+    }
+  }
+  input {
+    flex: 1 0 auto;
+  }
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>
+</style> 
