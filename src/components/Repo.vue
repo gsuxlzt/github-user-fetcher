@@ -4,9 +4,12 @@
             {{$route.params.repo}}
         </h1>
         <hr/>
-        <div v-for="content in contents" v-bind:key="content">
+        <div class="list" v-if="contents.length" v-for="content in contents" v-bind:key="content">
             <vue-markdown>{{content}}</vue-markdown>
         </div>
+        <div class="list--no-readme" v-else>
+            <h2>This repository doesn't have a README.</h2>
+          </div>
     </div>
 
 </template>
@@ -42,3 +45,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.list,
+.list--no-readme {
+  padding: 10px;
+}
+</style>

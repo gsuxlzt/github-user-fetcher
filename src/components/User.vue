@@ -5,7 +5,7 @@
         <hr/>
       </div>
       <div class="list--no-repo" v-if="!projects.length">
-        This user has no repositories to be displayed.
+        <h2>This user has no repositories to be displayed.</h2>
       </div>
       <div class="list" v-else v-for="project in projects" v-bind:key="project.id">
         <router-link class="link" :to="{path: `/${$route.params.user}/${project.name}`}">{{project.name}}</router-link>
@@ -49,7 +49,8 @@ export default {
   width: 100%;
   background-color: #eee;
 }
-.list {
+.list,
+.list--no-repo {
   padding: 10px;
 }
 </style>
