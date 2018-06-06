@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div>
+        <h1>
             {{$route.params.repo}}
-        </div>
+        </h1>
         <hr/>
         <div v-for="content in contents" v-bind:key="content">
             <vue-markdown>{{content}}</vue-markdown>
