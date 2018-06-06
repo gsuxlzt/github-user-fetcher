@@ -7,7 +7,7 @@
     </div>
 	<div class="main--item">
 		<form v-on:submit.prevent="onSubmit" class="flex-form">
-			<input v-model="user" class="flex-form--item" name="user_name"/>
+			<input ref="user_name" v-model="user" class="flex-form--item" name="user_name"/>
 			<button class="flex-form--item" type="submit">Search</button>
 			<div class="flex-form--item error-container">
 				<span v-if="hasError" class="error-message">No user matched your search.</span>
@@ -36,6 +36,7 @@ export default {
         .catch(error => {
           this.hasError = true;
           this.user = "";
+          this.$nextTick(() => this.$refs.user_name.focus());
         })
         .then(response => {
           $router.push(`/${response.data.login}`);
@@ -46,7 +47,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #main {
   width: 35%;
   margin: 0 auto;
@@ -73,6 +74,7 @@ export default {
   justify-content: space-between;
   .flex-form--item {
     margin: 0 5px;
+    margin-bottom: 5px;
   }
   .error-container {
     align-self: flex-start;
@@ -84,6 +86,20 @@ export default {
   }
   input {
     flex: 1 0 auto;
+    border: 0;
+    border-bottom: 1px solid #000;
+    padding: 6px 4px;
+    background-color: #eee;
+    transition: all 0.3s;
+    font-size: 14px;
+    &:focus {
+      outline: none;
+    }
+  }
+  button {
+    padding: 8px 12px;
+    color: #eee;
+    background-color: #24292f;
   }
 }
 </style> 
