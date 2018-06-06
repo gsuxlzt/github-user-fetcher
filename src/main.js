@@ -11,9 +11,9 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: Search },
-    { path: '/404', component: ErrorPage },
     { path: '/:user', component: User },
-    { path: '/:user/:repo', component: Repo }
+    { path: '/:user/:repo', component: Repo },
+    { path: '*', component: ErrorPage }
   ]
 })
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!hasError">
+    <div>
       <div class="user">
         <h1>{{$route.params.user}}'s Projects</h1>
         <hr/>
