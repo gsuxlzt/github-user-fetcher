@@ -1,16 +1,15 @@
 <template>
     <div v-if="!hasError">
-        <div>{{$route.params.user}}'s Projects</div>
+      <div class="user">
+        <h1>{{$route.params.user}}'s Projects</h1>
         <hr/>
-        <div v-if="!projects.length">
-            This user has no repositories to be displayed.
-        </div>
-        <div v-else v-for="project in projects" v-bind:key="project.id">
-            <router-link :to="{path: `/${$route.params.user}/${project.name}`}">{{project.name}}</router-link>
-        </div>
-    </div>
-    <div v-else>
-        ERROR
+      </div>
+      <div class="list--no-repo" v-if="!projects.length">
+        This user has no repositories to be displayed.
+      </div>
+      <div class="list" v-else v-for="project in projects" v-bind:key="project.id">
+        <router-link class="link" :to="{path: `/${$route.params.user}/${project.name}`}">{{project.name}}</router-link>
+      </div>
     </div>
 </template>
 
@@ -22,8 +21,7 @@ export default {
   data() {
     return {
       user: this.$route.params.user,
-      projects: [],
-      hasError: false
+      projects: []
     };
   },
   created() {
@@ -32,7 +30,7 @@ export default {
     axios
       .get(`${api}/users/${this.user}/repos`)
       .catch(error => {
-        this.hasError = true;
+        this.$router.push("/404");
       })
       .then(response => {
         this.projects = response.data.map(repo => ({
@@ -43,3 +41,15 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.user {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #eee;
+}
+.list {
+  padding: 10px;
+}
+</style>
