@@ -4,12 +4,14 @@ import App from './App.vue';
 import Search from './components/Search.vue';
 import User from './components/User.vue';
 import Repo from './components/Repo.vue';
+import ErrorPage from './components/404.vue';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
     { path: '/', component: Search },
+    { path: '/404', component: ErrorPage },
     { path: '/:user', component: User },
     { path: '/:user/:repo', component: Repo }
   ]
