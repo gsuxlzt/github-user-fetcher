@@ -10,10 +10,10 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', component: Search },
-    { path: '/:user', component: User },
-    { path: '/:user/:repo', component: Repo },
-    { path: '*', component: ErrorPage }
+    { path: '/', name: 'search', component: Search },
+    { path: '/:user', name: 'user', component: User },
+    { path: '/:user/:repo', name: 'repo', component: Repo },
+    { path: '*', name: 'error', component: ErrorPage }
   ]
 })
 new Vue({
