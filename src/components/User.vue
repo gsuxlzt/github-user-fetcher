@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!isLoading">
       <div class="user">
         <h1>{{$route.params.user}}'s Projects</h1>
         <hr/>
@@ -11,6 +11,9 @@
         <router-link class="link" :to="{path: `/${$route.params.user}/${project.name}`}">{{project.name}}</router-link>
       </div>
     </div>
+    <div v-else>
+      Loading...
+      </div>
 </template>
 
 <script>
@@ -21,22 +24,24 @@ export default {
   data() {
     return {
       user: this.$route.params.user,
-      projects: []
+      projects: [],
+      isLoading: true
     };
   },
   created() {
     const api = "https://api.github.com";
-
+    this.isLoading = true;
     axios
       .get(`${api}/users/${this.user}/repos`)
       .catch(error => {
-        this.$router.push("/404");
+        this.$router.push({ name: "error" });
       })
       .then(response => {
         this.projects = response.data.map(repo => ({
           id: repo.id,
           name: repo.name
         }));
+        this.isLoading = false;
       });
   }
 };

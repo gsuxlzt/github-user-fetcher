@@ -1,5 +1,5 @@
 <template>
-<h1>It seems like your search didn't give any meaningful results. Why don't you go back and <router-link class="link" :to="{path: '/'}">search</router-link> again?</h1>
+<h1>It seems like your search didn't give any meaningful results. Why don't you go back and <router-link class="link" :to="{name: 'search'}">search</router-link> again?</h1>
 </template>
 
 <style lang="scss" scoped>
