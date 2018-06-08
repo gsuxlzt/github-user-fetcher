@@ -10,12 +10,14 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/', name: 'search', component: Search },
+    { path: '/', name: 'search', component: Search, exact: true },
+    { path: '/404', name: 'error', component: ErrorPage, exact: true },
     { path: '/:user', name: 'user', component: User },
     { path: '/:user/:repo', name: 'repo', component: Repo },
-    { path: '*', name: 'error', component: ErrorPage }
+    { path: '*', redirect: { name: 'error' } }
   ]
 })
+
 new Vue({
   el: '#app',
   router,
